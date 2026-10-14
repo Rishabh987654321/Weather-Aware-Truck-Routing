@@ -91,25 +91,6 @@ A truck driver cares about two things at once: how long the trip takes, and whet
 
 The recommended route is taller and carries the big figures. Alternates are compact rows with how much slower or faster they are. The selected route is drawn on the map with risk-coloured stretches and a white outline.
 
-### The risk ribbon
-
-<p align="center">
-  <img src="docs/images/risk-ribbon.png" alt="Close-up of three risk ribbons, one with a red severe stretch and one with orange high-risk stretches" width="720">
-</p>
-
-Each ribbon shows the route left to right in driving order. Width is proportional to miles. A long green run with one orange stretch tells you where to pay attention without reading a table.
-
-| Level | Colour | Marker | Also shown as |
-|---|---|---|---|
-| Low | Green | L | |
-| Moderate | Yellow | M | |
-| High | Orange | H | |
-| Severe | Red | S | |
-| No Travel | Near-black | X | Barricade stripe |
-| Unknown (no forecast) | Grey | ? | Dotted fill |
-
-Colour is never the only signal: markers carry a letter, and the ribbon uses patterns for No Travel and Unknown.
-
 ### Checkpoint details
 
 <p align="center">
@@ -125,24 +106,6 @@ Every checkpoint explains itself: the ETA in local time with the zone, wind and 
 </p>
 
 Drag the slider to see conditions across the whole corridor at any hour in the next 48. Press play to watch weather move. The slider never calls the server: all 49 frames are loaded once.
-
-### Mobile
-
-<p align="center">
-  <img src="docs/images/mobile.png" alt="Mobile layout with the map on top and a draggable bottom sheet containing the recommended route" width="320">
-</p>
-
-On phones the map fills the screen and the results live in a bottom sheet with three snap positions.
-
-### Loading and error states
-
-<p align="center">
-  <img src="docs/images/loading-skeleton.png" alt="Skeleton placeholders shaped like the real route rows while results load" width="440">
-  &nbsp;&nbsp;
-  <img src="docs/images/error-state.png" alt="Error message with a retry action when the server cannot be reached" width="440">
-</p>
-
----
 
 ## How a recommendation is made
 
@@ -715,6 +678,6 @@ The assignment leaves several points open. These are the decisions made. All of 
 Built by **Rishabh** as a full-stack assessment project.
 
 [GitHub](https://github.com/Rishabh987654321) &nbsp;·&nbsp; [LinkedIn](https://www.linkedin.com/in/rishabh-kumar-730492233/?skipRedirect=true) &nbsp;·&nbsp;
-[Email](mailto:[EMAIL_ADDRESS])
+[Email](mailto:rishabhkumar90063@gmail.com)
 
 <sub>Route and weather data come from third-party services. Always follow official road conditions and your company's safety policies. This tool supports planning and does not replace the driver's judgement.</sub>
