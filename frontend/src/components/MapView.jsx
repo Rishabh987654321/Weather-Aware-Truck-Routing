@@ -44,13 +44,21 @@ function getResolvedThemeColors() {
   };
 }
 
-const CARTO_KEY = import.meta.env.VITE_CARTO_API_KEY || '';
-const BASE_TILE_URL = CARTO_KEY
-  ? `https://{s}.basemaps.cartocdn.com/rastertiles/light_nolabels/{z}/{x}/{y}.png?key=${CARTO_KEY}`
-  : 'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png';
-const LABELS_TILE_URL = CARTO_KEY
-  ? `https://{s}.basemaps.cartocdn.com/rastertiles/light_only_labels/{z}/{x}/{y}.png?key=${CARTO_KEY}`
-  : 'https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png';
+const BASE_TILE_URL =
+  import.meta.env.VITE_TILE_URL ||
+  'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+
+const BASE_TILE_ATTRIBUTION =
+  import.meta.env.VITE_TILE_ATTRIBUTION ||
+  '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors';
+
+const LABELS_TILE_URL = import.meta.env.VITE_LABELS_TILE_URL || '';
+
+const handleTileError = (e) => {
+  if (e?.tile) {
+    e.tile.style.visibility = 'hidden';
+  }
+};
 
 // Checkpoint icon cache to preserve DOM identity across ticks
 const checkpointIconCache = new Map();
@@ -153,6 +161,7 @@ function MapController({ routes, origin, destination, isMobile }) {
       map.fitBounds(bounds, {
         paddingTopLeft: [padding.paddingLeft, padding.paddingTop],
         paddingBottomRight: [padding.paddingRight, padding.paddingBottom],
+        maxZoom: 12,
         animate: true,
         duration: 0.8,
       });
@@ -240,16 +249,18 @@ export function MapView({
         preferCanvas
         center={[39.0, -98.0]}
         zoom={4}
+        maxZoom={12}
         zoomSnap={0.25}
         zoomControl={false}
         style={{ width: '100%', height: '100%', background: 'var(--ground)' }}
         ref={mapRef}
       >
-        {/* CARTO light no-labels base layer */}
+        {/* Basemap layer (defaults to OpenStreetMap, configurable via VITE_TILE_URL) */}
         <TileLayer
           url={BASE_TILE_URL}
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-          maxZoom={19}
+          attribution={BASE_TILE_ATTRIBUTION}
+          maxZoom={12}
+          eventHandlers={{ tileerror: handleTileError }}
         />
 
         {/* Forecast weather heatmap layer on dedicated heatmapPane (zIndex 350) */}
@@ -453,13 +464,16 @@ export function MapView({
           />
         )}
 
-        {/* CARTO labels layer on top pane (zIndex 450) so city names stay visible above routes */}
-        <Pane name="labels" style={{ zIndex: 450, pointerEvents: 'none' }}>
-          <TileLayer
-            url={LABELS_TILE_URL}
-            maxZoom={19}
-          />
-        </Pane>
+        {/* Optional separate labels layer on top pane (zIndex 450) when provided */}
+        {LABELS_TILE_URL ? (
+          <Pane name="labels" style={{ zIndex: 450, pointerEvents: 'none' }}>
+            <TileLayer
+              url={LABELS_TILE_URL}
+              maxZoom={12}
+              eventHandlers={{ tileerror: handleTileError }}
+            />
+          </Pane>
+        ) : null}
       </MapContainer>
     </div>
   );

@@ -310,3 +310,9 @@ html, body, #root {
   outline-offset: 2px;
 }
 
+/* Suppress broken tile indicators quietly without layout shift */
+.leaflet-tile-error {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+

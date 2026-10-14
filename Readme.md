@@ -526,6 +526,9 @@ Open <http://localhost:5173>, pick the **Dallas to Denver** example, and press *
 | Variable | Required | Example | Purpose |
 |---|---|---|---|
 | `VITE_API_BASE_URL` | yes | `http://localhost:8000` | Where the backend lives |
+| `VITE_TILE_URL` | no | `https://tile.openstreetmap.org/{z}/{x}/{y}.png` | Basemap tile URL template (defaults to OpenStreetMap standard tiles) |
+| `VITE_TILE_ATTRIBUTION` | no | `&copy; OpenStreetMap contributors` | Basemap attribution string |
+| `VITE_LABELS_TILE_URL` | no | `https://.../light_only_labels/{z}/{x}/{y}.png` | Optional separate top-layer labels tile URL (for two-layer basemaps) |
 
 Tunable constants (thresholds, tolerances, spacing, speed factor) are all in [`backend/risk/config.py`](backend/risk/config.py).
 
@@ -624,6 +627,7 @@ The assignment leaves several points open. These are the decisions made. All of 
 - **Forecast range.** Weather comes from Open-Meteo, which limits how far ahead and behind forecasts are available. Checkpoints outside the window are shown as Unknown with a warning.
 - **Free public services.** OSRM, Nominatim and Open-Meteo have usage policies and rate limits. The server caches and proxies them, sets a descriptive User-Agent, and never calls them from the browser. The free Open-Meteo tier is for non-commercial use.
 - **US locations only** in search.
+- **Map tile zoom cap.** Map zoom and tile layers are capped at zoom level 12 to eliminate excess bandwidth and 403 tile rate limits on corridor overviews, while comfortably framing short trips (e.g. Dallas to Fort Worth).
 - **Per-process caches.** The default in-memory cache and rate limiting are per server process. A shared cache such as Redis would be the next step for multiple workers.
 - **Free hosting cold starts**, see [Deployment](#deployment).
 
@@ -661,7 +665,7 @@ The assignment leaves several points open. These are the decisions made. All of 
 | [OSRM](https://project-osrm.org/) | Routes | Public demo server, car profile, usage policy applies |
 | [Open-Meteo](https://open-meteo.com/) | Hourly wind, gusts, rain, snowfall | Free tier for non-commercial use, data licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) |
 | [Nominatim](https://nominatim.org/) and [OpenStreetMap](https://www.openstreetmap.org/copyright) | Place search | Data © OpenStreetMap contributors, ODbL. Usage policy applies |
-| [CARTO](https://carto.com/) basemaps | Map tiles and labels | Attribution is shown on the map |
+| [OpenStreetMap](https://www.openstreetmap.org/copyright) standard tiles | Basemap tiles | Standard tiles © OpenStreetMap contributors, ODbL (configurable via `VITE_TILE_URL`) |
 | [Leaflet](https://leafletjs.com/) and [leaflet.heat](https://github.com/Leaflet/Leaflet.heat) | Map and heat layer | |
 | [Barlow](https://fonts.google.com/specimen/Barlow) | Typefaces | SIL Open Font License, self-hosted through Fontsource |
 
