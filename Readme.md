@@ -11,7 +11,7 @@ Enter a trip, a departure time and a load weight. Haulwise checks the forecast f
 ![Leaflet](https://img.shields.io/badge/Leaflet-leaflet.heat-199900?logo=leaflet&logoColor=white)
 ![Tests](https://img.shields.io/badge/tests-backend%20%2B%20frontend-2E9E6A)
 
-[**Live app**](https://YOUR-APP-URL.vercel.app) &nbsp;·&nbsp; [**Video walkthrough**](https://www.loom.com/share/YOUR-LOOM-ID) &nbsp;·&nbsp; [**API reference**](docs/API.md) &nbsp;·&nbsp; [**Risk rules**](docs/RISK_RULES.md)
+[**Live app**](https://frontend-orcin-alpha-70.vercel.app/) &nbsp;·&nbsp; [**Video walkthrough**](https://www.loom.com/share/YOUR-LOOM-ID) &nbsp;·&nbsp; [**API reference**](docs/API.md) &nbsp;·&nbsp; [**Risk rules**](docs/RISK_RULES.md)
 
 <img src="docs/images/hero.png" alt="Haulwise showing three routes from Dallas to Denver, with the recommended route's risk ribbon and checkpoints on the map" width="920">
 
@@ -460,7 +460,7 @@ Other measures: the fallback routing calls run in parallel under an 8-second bud
 ### 1. Clone
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/YOUR-REPO.git
+git clone https://github.com/Rishabh987654321/Weather-Aware-Truck-Routing.git
 cd YOUR-REPO
 ```
 
@@ -714,6 +714,7 @@ The assignment leaves several points open. These are the decisions made. All of 
 
 Built by **Rishabh** as a full-stack assessment project.
 
-[GitHub](https://github.com/YOUR-USERNAME) &nbsp;·&nbsp; [LinkedIn](https://www.linkedin.com/in/YOUR-PROFILE) &nbsp;·&nbsp; [Email](mailto:you@example.com)
+[GitHub](https://github.com/Rishabh987654321) &nbsp;·&nbsp; [LinkedIn](https://www.linkedin.com/in/rishabh-kumar-730492233/?skipRedirect=true) &nbsp;·&nbsp;
+[Email](mailto:[EMAIL_ADDRESS])
 
 <sub>Route and weather data come from third-party services. Always follow official road conditions and your company's safety policies. This tool supports planning and does not replace the driver's judgement.</sub>
