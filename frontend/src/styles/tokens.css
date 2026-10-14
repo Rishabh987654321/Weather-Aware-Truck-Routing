@@ -1,0 +1,312 @@
+:root {
+  /* neutrals: cool, asphalt and concrete */
+  --ink: #14181B;          /* primary text, route ink */
+  --ink-2: #3A4247;        /* secondary text */
+  --ink-3: #5F6A70;        /* tertiary text, units (>= 5:1 on --panel) */
+  --ground: #E6E9EA;       /* behind panels, map loading colour */
+  --panel: #F8F9F9;        /* side panel */
+  --field: #FFFFFF;        /* inputs */
+  --line: #D3D8DB;         /* hairlines */
+
+  /* action */
+  --primary: #1456A0;      /* service-sign blue: buttons, links, focus */
+  --primary-press: #0F4682;
+
+  /* risk: darker as it gets worse, so it still reads without hue */
+  --risk-low: #2E9E6A;
+  --risk-low-alpha: rgba(46, 158, 106, 0.25);
+  --risk-moderate: #F2C200;
+  --risk-high: #EE7B1C;
+  --risk-severe: #D1322F;
+  --risk-no-travel: #1B1B1F;   /* always drawn with barricade hatch in bars */
+  --risk-unknown: #9AA3A8;     /* always drawn with dotted fill in bars */
+
+  --white: #FFFFFF;        /* pure white for high contrast text and halos */
+  --warning-bg: #FFF9E6;   /* warning box background */
+  --warning-line: #FFE082; /* warning box border */
+
+  /* shape: sign-like small radii, one panel edge, no blanket shadow */
+  --r-sm: 4px;             /* badges, inputs, ribbon */
+  --r-md: 8px;             /* buttons, popups */
+  --r-lg: 14px;            /* bottom sheet top corners only */
+  --panel-edge: 0 0 0 1px var(--line), 10px 0 28px -16px rgba(20, 24, 27, 0.35);
+
+  /* motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 140ms;
+  --dur-base: 240ms;
+  --dur-slow: 520ms;
+
+  /* type */
+  --font-ui: 'Barlow', system-ui, sans-serif;
+  --font-display: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-ui);
+  background-color: var(--ground);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Skeleton shimmer */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #DDE2E4;
+  border-radius: var(--r-sm);
+}
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  animation: shimmer 1.4s var(--ease-inout) infinite;
+}
+@keyframes shimmer {
+  to { transform: translateX(100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after { animation: none; }
+}
+
+/* Ribbon styles */
+.ribbon {
+  display: flex;
+  gap: 1px;
+  height: 12px;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  transform-origin: left;
+  animation: ribbon-fill 600ms var(--ease-out) both;
+}
+.ribbon--tall {
+  height: 16px;
+}
+@keyframes ribbon-fill {
+  from { transform: scaleX(0); opacity: 0.8; }
+  to { transform: scaleX(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ribbon { animation: none !important; }
+}
+.ribbon__seg {
+  flex-basis: 0;
+  min-width: 2px;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+.level-low { background: var(--risk-low); }
+.level-moderate { background: var(--risk-moderate); }
+.level-high { background: var(--risk-high); }
+.level-severe { background: var(--risk-severe); }
+.level-no_travel {
+  background: repeating-linear-gradient(135deg, var(--risk-no-travel) 0 5px, var(--panel) 5px 9px);
+}
+.level-unknown {
+  background: radial-gradient(circle, #6f7a80 1px, transparent 1.4px) 0 0 / 5px 5px, var(--risk-unknown);
+}
+
+/* Checkpoint marker styles */
+.cp {
+  background: transparent;
+  border: none;
+}
+.cp__dot {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--white);
+  box-shadow: 0 0 0 1px rgba(20, 24, 27, 0.35);
+  font: 700 12px/1 var(--font-display);
+  color: var(--ink);
+  cursor: pointer;
+  animation: cp-in 160ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 28ms);
+}
+.cp__dot.level-low { background: var(--risk-low); color: var(--ink); }
+.cp__dot.level-moderate { background: var(--risk-moderate); color: var(--ink); }
+.cp__dot.level-high { background: var(--risk-high); color: var(--ink); }
+.cp__dot.level-severe { background: var(--risk-severe); color: var(--white); }
+.cp__dot.level-no_travel { background: var(--risk-no-travel); color: var(--white); }
+.cp__dot.level-unknown { background: var(--risk-unknown); color: var(--ink); }
+
+.cp__dot--selected {
+  box-shadow: 0 0 0 2px var(--ink), 0 0 0 4px var(--white);
+}
+
+@keyframes cp-in {
+  from { transform: scale(0.4); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cp__dot { animation: none; }
+}
+
+/* Time delta pill on map */
+.delta-pill {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 2px 7px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--ink);
+  box-shadow: 0 1px 4px rgba(20, 24, 27, 0.15);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Custom Leaflet popup */
+.leaflet-popup-content-wrapper {
+  background: var(--panel) !important;
+  color: var(--ink) !important;
+  border-radius: var(--r-md) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow: 0 8px 24px -6px rgba(20, 24, 27, 0.25) !important;
+  padding: 0 !important;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1.4 !important;
+}
+.leaflet-popup-tip {
+  background: var(--panel) !important;
+}
+
+/* Bottom control bar */
+.bottom-control-bar {
+  position: absolute;
+  bottom: 24px;
+  left: calc(var(--panel-w) + 24px);
+  right: 24px;
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 12px 18px;
+  z-index: 500;
+  box-shadow: 0 4px 20px -4px rgba(20, 24, 27, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+}
+
+@media (max-width: 899px) {
+  .bottom-control-bar {
+    left: 12px;
+    right: 12px;
+    bottom: 84px;
+    padding: 10px 14px;
+  }
+}
+
+/* Heatmap Slider */
+.heat-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--line);
+  border-radius: var(--r-sm);
+  outline: none;
+  cursor: pointer;
+  margin: 8px 0;
+}
+
+.heat-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 2px solid var(--ink);
+  cursor: grab;
+  box-shadow: 0 1px 4px rgba(20, 24, 27, 0.2);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.heat-slider::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(1.15);
+}
+
+.heat-slider:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.heat-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 2px solid var(--ink);
+  cursor: grab;
+  box-shadow: 0 1px 4px rgba(20, 24, 27, 0.2);
+}
+
+.heat-slider:focus-visible::-moz-range-thumb {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Legend and toggle buttons */
+.heat-legend-bar {
+  height: 6px;
+  border-radius: var(--r-sm);
+  background: linear-gradient(
+    90deg,
+    var(--risk-low) 0%,
+    var(--risk-moderate) 25%,
+    var(--risk-high) 50%,
+    var(--risk-severe) 75%,
+    var(--risk-no-travel) 100%
+  );
+  width: 120px;
+}
+
+.play-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+
+.play-toggle-btn:hover {
+  background: var(--ground);
+  border-color: var(--ink-2);
+}
+
+.play-toggle-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
