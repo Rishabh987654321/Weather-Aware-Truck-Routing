@@ -1,0 +1,18 @@
+[
+  {
+    "place_id": 123456,
+    "licence": "Data \u00a9 OpenStreetMap contributors",
+    "osm_type": "relation",
+    "osm_id": 111111,
+    "lat": "32.7762719",
+    "lon": "-96.7968559",
+    "category": "boundary",
+    "type": "administrative",
+    "place_rank": 16,
+    "importance": 0.85,
+    "addresstype": "city",
+    "name": "Dallas",
+    "display_name": "Dallas, Dallas County, Texas, United States",
+    "boundingbox": ["32.6185", "33.0238", "-96.999", "-96.554"]
+  }
+]
