@@ -11,9 +11,9 @@ Enter a trip, a departure time and a load weight. Haulwise checks the forecast f
 ![Leaflet](https://img.shields.io/badge/Leaflet-leaflet.heat-199900?logo=leaflet&logoColor=white)
 ![Tests](https://img.shields.io/badge/tests-backend%20%2B%20frontend-2E9E6A)
 
-[**Live app**](https://frontend-orcin-alpha-70.vercel.app/) &nbsp;·&nbsp; [**Video walkthrough**](https://www.loom.com/share/YOUR-LOOM-ID) &nbsp;·&nbsp; [**API reference**](docs/API.md) &nbsp;·&nbsp; [**Risk rules**](docs/RISK_RULES.md)
+[**Live app**](https://frontend-orcin-alpha-70.vercel.app/) &nbsp;·&nbsp; [**Video walkthrough**](https://www.loom.com/share/fd51f40e8ebd4b808cc9df8f64d4506c) &nbsp;·&nbsp; [**API reference**](docs/API.md) &nbsp;·&nbsp; [**Risk rules**](docs/RISK_RULES.md)
 
-<img src="docs/images/hero.png" alt="Haulwise showing three routes from Dallas to Denver, with the recommended route's risk ribbon and checkpoints on the map" width="920">
+<img src="docs/images/image.png" alt="Haulwise showing three routes from Dallas to Denver, with the recommended route's risk ribbon and checkpoints on the map" width="920">
 
 </div>
 
@@ -86,7 +86,7 @@ A truck driver cares about two things at once: how long the trip takes, and whet
 ### Results: three routes, one recommendation
 
 <p align="center">
-  <img src="docs/images/results-desktop.png" alt="Results panel with the recommended route featured and two alternates, each with a risk ribbon" width="920">
+  <img src="docs/images/Routes.png" alt="Results panel with the recommended route featured and two alternates, each with a risk ribbon" width="920">
 </p>
 
 The recommended route is taller and carries the big figures. Alternates are compact rows with how much slower or faster they are. The selected route is drawn on the map with risk-coloured stretches and a white outline.
@@ -94,7 +94,7 @@ The recommended route is taller and carries the big figures. Alternates are comp
 ### Checkpoint details
 
 <p align="center">
-  <img src="docs/images/checkpoint-popup.png" alt="A checkpoint popup showing ETA, wind, gust, rain, snow, the risk level and the rule that decided it" width="560">
+  <img src="docs/images/image2.png" alt="A checkpoint popup showing ETA, wind, gust, rain, snow, the risk level and the rule that decided it" width="560">
 </p>
 
 Every checkpoint explains itself: the ETA in local time with the zone, wind and gust, rain, snow, the resulting level, and the exact rule that decided it (for example *"wind 47 mph with load 34,000 lb: No Travel"*).
@@ -102,7 +102,7 @@ Every checkpoint explains itself: the ETA in local time with the zone, wind and 
 ### Forecast heatmap with a time slider
 
 <p align="center">
-  <img src="docs/images/heatmap-storm.png" alt="Heatmap showing a storm pocket between Indianapolis and Cincinnati on a Chicago to Atlanta trip, with the time slider at +12 hours" width="920">
+  <img src="docs/images/heatmap.png" alt="Heatmap showing a storm pocket between Indianapolis and Cincinnati on a Chicago to Atlanta trip, with the time slider at +12 hours" width="920">
 </p>
 
 Drag the slider to see conditions across the whole corridor at any hour in the next 48. Press play to watch weather move. The slider never calls the server: all 49 frames are loaded once.
